@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zenith — Seu Centro de Controle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="login-screen">
+    <canvas id="stars-canvas"></canvas>
+    <div class="login-content">
+      <div class="login-logo">
+        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="28" stroke="#7DF9FF" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="30" cy="30" r="18" stroke="#7DF9FF" stroke-width="1" opacity="0.5"/>
+          <circle cx="30" cy="30" r="5" fill="#7DF9FF"/>
+          <line x1="30" y1="2" x2="30" y2="14" stroke="#7DF9FF" stroke-width="1.5"/>
+          <line x1="30" y1="46" x2="30" y2="58" stroke="#7DF9FF" stroke-width="1.5"/>
+          <line x1="2" y1="30" x2="14" y2="30" stroke="#7DF9FF" stroke-width="1.5"/>
+          <line x1="46" y1="30" x2="58" y2="30" stroke="#7DF9FF" stroke-width="1.5"/>
+        </svg>
+        <h1>ZENITH</h1>
+        <p>Centro de Controle Pessoal</p>
+      </div>
+      <button id="google-login-btn" class="google-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Entrar com Google
+      </button>
+      <p class="login-sub">Acesso exclusivo — só você entra aqui.</p>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app" class="app hidden">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg width="28" height="28" viewBox="0 0 60 60" fill="none">
+          <circle cx="30" cy="30" r="28" stroke="#7DF9FF" stroke-width="1.5" stroke-dasharray="4 3"/>
+          <circle cx="30" cy="30" r="5" fill="#7DF9FF"/>
+          <line x1="30" y1="2" x2="30" y2="14" stroke="#7DF9FF" stroke-width="1.5"/>
+          <line x1="30" y1="46" x2="30" y2="58" stroke="#7DF9FF" stroke-width="1.5"/>
+          <line x1="2" y1="30" x2="14" y2="30" stroke="#7DF9FF" stroke-width="1.5"/>
+          <line x1="46" y1="30" x2="58" y2="30" stroke="#7DF9FF" stroke-width="1.5"/>
+        </svg>
+        <span>ZENITH</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-section="negocios">
+          <span class="nav-icon">🚀</span><span>Negócios</span>
+        </button>
+        <button class="nav-item" data-section="metas">
+          <span class="nav-icon">🎯</span><span>Metas</span>
+        </button>
+        <button class="nav-item" data-section="financas">
+          <span class="nav-icon">💰</span><span>Finanças</span>
+        </button>
+        <button class="nav-item" data-section="saude">
+          <span class="nav-icon">💪</span><span>Saúde</span>
+        </button>
+        <button class="nav-item" data-section="viagens">
+          <span class="nav-icon">✈️</span><span>Viagens</span>
+        </button>
+        <button class="nav-item" data-section="conexoes">
+          <span class="nav-icon">❤️</span><span>Conexões</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info" id="user-info"></div>
+        <button id="logout-btn" class="logout-btn">Sair</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- NEGÓCIOS -->
+      <section class="section active" id="section-negocios">
+        <div class="section-header">
+          <div>
+            <h2>🚀 Área de Negócios</h2>
+            <p class="section-sub">Projetos, metas e estratégias — o núcleo de tudo.</p>
+          </div>
+          <button class="btn-primary" id="btn-add-projeto">+ Novo Projeto</button>
+        </div>
+        <div class="projects-grid" id="projects-grid"></div>
+      </section>
+
+      <!-- METAS -->
+      <section class="section" id="section-metas">
+        <div class="section-header">
+          <div>
+            <h2>🎯 Área de Metas</h2>
+            <p class="section-sub">Do dia a dia até os sonhos da vida.</p>
+          </div>
+          <button class="btn-primary" id="btn-add-meta">+ Nova Meta</button>
+        </div>
+        <div class="metas-tabs">
+          <button class="meta-tab active" data-tipo="diaria">📅 Diárias</button>
+          <button class="meta-tab" data-tipo="mensal">📆 Mensais</button>
+          <button class="meta-tab" data-tipo="anual">🗓️ Anuais</button>
+          <button class="meta-tab" data-tipo="life">⭐ Life Dreams</button>
+          <button class="meta-tab" data-tipo="antes30">⏳ Antes dos 30</button>
+        </div>
+        <div class="metas-list" id="metas-list"></div>
+      </section>
+
+      <!-- FINANÇAS -->
+      <section class="section" id="section-financas">
+        <div class="section-header">
+          <div>
+            <h2>💰 Área de Finanças</h2>
+            <p class="section-sub">Contas a pagar e controle do fluxo.</p>
+          </div>
+          <button class="btn-primary" id="btn-add-conta">+ Adicionar Conta</button>
+        </div>
+        <div class="financas-resumo" id="financas-resumo"></div>
+        <div class="contas-list" id="contas-list"></div>
+      </section>
+
+      <!-- SAÚDE -->
+      <section class="section" id="section-saude">
+        <div class="section-header">
+          <div>
+            <h2>💪 Área de Saúde</h2>
+            <p class="section-sub">Treinos, alimentação e cuidados.</p>
+          </div>
+        </div>
+        <div class="saude-tabs">
+          <button class="saude-tab active" data-tipo="treino">🏋️ Treinos</button>
+          <button class="saude-tab" data-tipo="dieta">🥗 Dietas</button>
+          <button class="saude-tab" data-tipo="consulta">🩺 Consultas & Exames</button>
+        </div>
+        <div class="saude-actions">
+          <button class="btn-primary" id="btn-add-saude">+ Adicionar</button>
+        </div>
+        <div class="saude-list" id="saude-list"></div>
+      </section>
+
+      <!-- VIAGENS -->
+      <section class="section" id="section-viagens">
+        <div class="section-header">
+          <div>
+            <h2>✈️ Área de Viagens</h2>
+            <p class="section-sub">Destinos realizados e sonhados.</p>
+          </div>
+          <button class="btn-primary" id="btn-add-viagem">+ Nova Viagem</button>
+        </div>
+        <div class="viagens-grid" id="viagens-grid"></div>
+      </section>
+
+      <!-- CONEXÕES -->
+      <section class="section" id="section-conexoes">
+        <div class="section-header">
+          <div>
+            <h2>❤️ Área de Conexões</h2>
+            <p class="section-sub">Datas e momentos com quem importa.</p>
+          </div>
+          <button class="btn-primary" id="btn-add-conexao">+ Nova Data</button>
+        </div>
+        <div class="proximas-datas" id="proximas-datas"></div>
+        <div class="conexoes-list" id="conexoes-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal" id="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title">Modal</h3>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="modal-cancel">Cancelar</button>
+        <button class="btn-primary" id="modal-save">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECT DETAIL MODAL -->
+  <div id="project-modal-overlay" class="modal-overlay hidden">
+    <div class="modal modal-large" id="project-modal-box">
+      <div class="modal-header">
+        <h3 id="project-modal-title">Projeto</h3>
+        <button class="modal-close" id="project-modal-close">✕</button>
+      </div>
+      <div class="modal-body" id="project-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs,
+      updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDuhRdFnKYsDdFjfpnokQjtRmoEKkroO0g",
+      authDomain: "zenith-5c1fd.firebaseapp.com",
+      projectId: "zenith-5c1fd",
+      storageBucket: "zenith-5c1fd.firebasestorage.app",
+      messagingSenderId: "885263347661",
+      appId: "1:885263347661:web:82739f43514cd0e44a9e84",
+      measurementId: "G-3LEVBW6EFR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    let currentUser = null;
+    let currentSection = 'negocios';
+    let currentMetaTipo = 'diaria';
+    let currentSaudeTipo = 'treino';
+    let unsubscribers = [];
+
+    // ─── STARS CANVAS ───────────────────────────────────
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    function initStars() {
+      stars = [];
+      for (let i = 0; i < 200; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.5,
+          o: Math.random(),
+          s: Math.random() * 0.005
+        });
+      }
+    }
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        s.o += s.s;
+        if (s.o > 1 || s.o < 0) s.s *= -1;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(125,249,255,${s.o})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateStars);
+    }
+    resizeCanvas(); initStars(); animateStars();
+    window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+
+    // ─── AUTH ────────────────────────────────────────────
+    document.getElementById('google-login-btn').addEventListener('click', async () => {
+      try { await signInWithPopup(auth, provider); }
+      catch(e) { console.error(e); alert('Erro ao fazer login: ' + e.message); }
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        currentUser = user;
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('app').classList.remove('hidden');
+        document.getElementById('user-info').innerHTML =
+          `<img src="${user.photoURL}" alt="${user.displayName}" />
+           <span>${user.displayName.split(' ')[0]}</span>`;
+        loadSection(currentSection);
+      } else {
+        currentUser = null;
+        document.getElementById('login-screen').classList.remove('hidden');
+        document.getElementById('app').classList.add('hidden');
+        unsubscribers.forEach(u => u());
+        unsubscribers = [];
+      }
+    });
+
+    // ─── NAV ─────────────────────────────────────────────
+    document.querySelectorAll('.nav-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentSection = btn.dataset.section;
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById('section-' + currentSection).classList.add('active');
+        loadSection(currentSection);
+      });
+    });
+
+    function loadSection(s) {
+      if (!currentUser) return;
+      if (s === 'negocios') loadNegocios();
+      if (s === 'metas') loadMetas(currentMetaTipo);
+      if (s === 'financas') loadFinancas();
+      if (s === 'saude') loadSaude(currentSaudeTipo);
+      if (s === 'viagens') loadViagens();
+      if (s === 'conexoes') loadConexoes();
+    }
+
+    // ─── MODAL ───────────────────────────────────────────
+    let modalSaveCallback = null;
+    function openModal(title, bodyHTML, onSave) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-body').innerHTML = bodyHTML;
+      document.getElementById('modal-overlay').classList.remove('hidden');
+      modalSaveCallback = onSave;
+    }
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.add('hidden');
+      modalSaveCallback = null;
+    }
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+    document.getElementById('modal-cancel').addEventListener('click', closeModal);
+    document.getElementById('modal-save').addEventListener('click', () => {
+      if (modalSaveCallback) modalSaveCallback();
+    });
+    document.getElementById('modal-overlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('modal-overlay')) closeModal();
+    });
+
+    // Project detail modal
+    function openProjectModal(title, bodyHTML) {
+      document.getElementById('project-modal-title').textContent = title;
+      document.getElementById('project-modal-body').innerHTML = bodyHTML;
+      document.getElementById('project-modal-overlay').classList.remove('hidden');
+    }
+    function closeProjectModal() {
+      document.getElementById('project-modal-overlay').classList.add('hidden');
+    }
+    document.getElementById('project-modal-close').addEventListener('click', closeProjectModal);
+    document.getElementById('project-modal-overlay').addEventListener('click', e => {
+      if (e.target === document.getElementById('project-modal-overlay')) closeProjectModal();
+    });
+
+    // ─── NEGÓCIOS ────────────────────────────────────────
+    const STATUS_CONFIG = {
+      'ok':        { label: 'OK ✅', color: '#22c55e' },
+      'quase':     { label: 'Quase 🔜', color: '#f59e0b' },
+      'plano':     { label: 'Plano 📋', color: '#7DF9FF' },
+      'pausado':   { label: 'Pausado ⏸️', color: '#6b7280' },
+      'abandonado':{ label: 'Abandonado ❌', color: '#ef4444' },
+    };
+
+    async function loadNegocios() {
+      const grid = document.getElementById('projects-grid');
+      grid.innerHTML = '<p class="loading-text">Carregando projetos...</p>';
+      const q = query(collection(db, `users/${currentUser.uid}/projetos`), orderBy('criadoEm', 'desc'));
+      const snap = await getDocs(q);
+      renderProjetos(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    }
+
+    function renderProjetos(projetos) {
+      const grid = document.getElementById('projects-grid');
+      if (projetos.length === 0) {
+        grid.innerHTML = '<p class="empty-text">Nenhum projeto ainda. Bora criar o primeiro! 🚀</p>';
+        return;
+      }
+      grid.innerHTML = projetos.map(p => {
+        const st = STATUS_CONFIG[p.status] || STATUS_CONFIG['plano'];
+        return `
+        <div class="project-card" onclick="window._openProject('${p.id}')">
+          <div class="project-card-header">
+            <span class="project-status-badge" style="background:${st.color}22;color:${st.color};border:1px solid ${st.color}44">${st.label}</span>
+            <div class="project-card-actions" onclick="event.stopPropagation()">
+              <button class="icon-btn" onclick="window._editProject('${p.id}')">✏️</button>
+              <button class="icon-btn" onclick="window._deleteProject('${p.id}')">🗑️</button>
+            </div>
+          </div>
+          <h3 class="project-name">${p.nome}</h3>
+          <p class="project-desc">${p.descricao || ''}</p>
+          ${p.proxDia ? `<div class="project-amanha"><span>📌 Próximo passo:</span> ${p.proxDia}</div>` : ''}
+          <div class="project-footer">
+            <span class="project-type">${p.tipo || 'Projeto'}</span>
+            <span class="project-link">${p.link ? `<a href="${p.link}" target="_blank">🔗 Ver site</a>` : ''}</span>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    window._openProject = async (id) => {
+      const docSnap = await getDoc(doc(db, `users/${currentUser.uid}/projetos`, id));
+      if (!docSnap.exists()) return;
+      const p = { id: docSnap.id, ...docSnap.data() };
+      const st = STATUS_CONFIG[p.status] || STATUS_CONFIG['plano'];
+      openProjectModal(p.nome, `
+        <div class="project-detail">
+          <div class="detail-row">
+            <span class="detail-label">Status</span>
+            <span class="project-status-badge" style="background:${st.color}22;color:${st.color};border:1px solid ${st.color}44">${st.label}</span>
+          </div>
+          ${p.tipo ? `<div class="detail-row"><span class="detail-label">Tipo</span><span>${p.tipo}</span></div>` : ''}
+          ${p.link ? `<div class="detail-row"><span class="detail-label">Link</span><a href="${p.link}" target="_blank" style="color:#7DF9FF">${p.link}</a></div>` : ''}
+          ${p.descricao ? `<div class="detail-section"><span class="detail-label">Descrição / Estratégia</span><p>${p.descricao}</p></div>` : ''}
+          ${p.proxDia ? `<div class="detail-section highlight-box"><span class="detail-label">📌 O que fazer no próximo dia</span><p>${p.proxDia}</p></div>` : ''}
+          ${p.notas ? `<div class="detail-section"><span class="detail-label">Notas</span><p>${p.notas}</p></div>` : ''}
+          <div class="detail-actions">
+            <button class="btn-primary" onclick="window._editProject('${id}');closeProjectModal()">✏️ Editar Projeto</button>
+          </div>
+        </div>`);
+    };
+
+    function projetoFormHTML(p = {}) {
+      return `
+        <div class="form-group">
+          <label>Nome do Projeto *</label>
+          <input id="f-nome" class="form-input" value="${p.nome||''}" placeholder="Ex: Bolão Master" />
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="f-status" class="form-select">
+            ${Object.entries(STATUS_CONFIG).map(([k,v]) =>
+              `<option value="${k}" ${p.status===k?'selected':''}>${v.label}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tipo</label>
+          <select id="f-tipo" class="form-select">
+            <option value="Site" ${p.tipo==='Site'?'selected':''}>Site</option>
+            <option value="App" ${p.tipo==='App'?'selected':''}>App</option>
+            <option value="SaaS" ${p.tipo==='SaaS'?'selected':''}>SaaS</option>
+            <option value="Ideia" ${p.tipo==='Ideia'?'selected':''}>Ideia</option>
+            <option value="Outro" ${p.tipo==='Outro'?'selected':''}>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Link do projeto</label>
+          <input id="f-link" class="form-input" value="${p.link||''}" placeholder="https://..." />
+        </div>
+        <div class="form-group">
+          <label>Descrição / Estratégia</label>
+          <textarea id="f-desc" class="form-textarea" rows="3" placeholder="O que é esse projeto, qual a estratégia...">${p.descricao||''}</textarea>
+        </div>
+        <div class="form-group highlight-input">
+          <label>📌 O que fazer no próximo dia?</label>
+          <textarea id="f-prox" class="form-textarea" rows="2" placeholder="Ex: Integrar pagamento no Bolão Master...">${p.proxDia||''}</textarea>
+        </div>
+        <div class="form-group">
+          <label>Notas extras</label>
+          <textarea id="f-notas" class="form-textarea" rows="2" placeholder="Qualquer coisa relevante...">${p.notas||''}</textarea>
+        </div>`;
+    }
+
+    document.getElementById('btn-add-projeto').addEventListener('click', () => {
+      openModal('Novo Projeto 🚀', projetoFormHTML(), async () => {
+        const nome = document.getElementById('f-nome').value.trim();
+        if (!nome) { alert('Coloca o nome do projeto!'); return; }
+        await addDoc(collection(db, `users/${currentUser.uid}/projetos`), {
+          nome, status: document.getElementById('f-status').value,
+          tipo: document.getElementById('f-tipo').value,
+          link: document.getElementById('f-link').value.trim(),
+          descricao: document.getElementById('f-desc').value.trim(),
+          proxDia: document.getElementById('f-prox').value.trim(),
+          notas: document.getElementById('f-notas').value.trim(),
+          criadoEm: serverTimestamp()
+        });
+        closeModal(); loadNegocios();
+      });
+    });
+
+    window._editProject = async (id) => {
+      const docSnap = await getDoc(doc(db, `users/${currentUser.uid}/projetos`, id));
+      if (!docSnap.exists()) return;
+      const p = { id: docSnap.id, ...docSnap.data() };
+      openModal('Editar Projeto ✏️', projetoFormHTML(p), async () => {
+        const nome = document.getElementById('f-nome').value.trim();
+        if (!nome) { alert('Nome obrigatório!'); return; }
+        await updateDoc(doc(db, `users/${currentUser.uid}/projetos`, id), {
+          nome, status: document.getElementById('f-status').value,
+          tipo: document.getElementById('f-tipo').value,
+          link: document.getElementById('f-link').value.trim(),
+          descricao: document.getElementById('f-desc').value.trim(),
+          proxDia: document.getElementById('f-prox').value.trim(),
+          notas: document.getElementById('f-notas').value.trim(),
+        });
+        closeModal(); loadNegocios();
+      });
+    };
+
+    window._deleteProject = async (id) => {
+      if (!confirm('Deletar esse projeto?')) return;
+      await deleteDoc(doc(db, `users/${currentUser.uid}/projetos`, id));
+      loadNegocios();
+    };
+
+    // ─── METAS ───────────────────────────────────────────
+    document.querySelectorAll('.meta-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.meta-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentMetaTipo = tab.dataset.tipo;
+        loadMetas(currentMetaTipo);
+      });
+    });
+
+    async function loadMetas(tipo) {
+      const list = document.getElementById('metas-list');
+      list.innerHTML = '<p class="loading-text">Carregando...</p>';
+      const q = query(collection(db, `users/${currentUser.uid}/metas`), orderBy('criadoEm', 'desc'));
+      const snap = await getDocs(q);
+      const all = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(m => m.tipo === tipo);
+      renderMetas(all);
+    }
+
+    function renderMetas(metas) {
+      const list = document.getElementById('metas-list');
+      if (metas.length === 0) {
+        list.innerHTML = '<p class="empty-text">Nenhuma meta aqui ainda. Bora definir! 🎯</p>';
+        return;
+      }
+      list.innerHTML = metas.map(m => `
+        <div class="meta-item ${m.concluida ? 'meta-done' : ''}">
+          <button class="meta-check ${m.concluida?'checked':''}" onclick="window._toggleMeta('${m.id}',${!m.concluida})">
+            ${m.concluida ? '✓' : ''}
+          </button>
+          <div class="meta-content">
+            <span class="meta-title">${m.titulo}</span>
+            ${m.descricao ? `<span class="meta-desc">${m.descricao}</span>` : ''}
+            ${m.prazo ? `<span class="meta-prazo">📅 ${m.prazo}</span>` : ''}
+          </div>
+          <div class="meta-actions">
+            <button class="icon-btn" onclick="window._deleteMeta('${m.id}')">🗑️</button>
+          </div>
+        </div>`).join('');
+    }
+
+    document.getElementById('btn-add-meta').addEventListener('click', () => {
+      const tipoLabel = document.querySelector('.meta-tab.active').textContent;
+      openModal(`Nova Meta — ${tipoLabel}`, `
+        <div class="form-group">
+          <label>Meta *</label>
+          <input id="f-titulo" class="form-input" placeholder="Ex: Lançar o Bolão Master" />
+        </div>
+        <div class="form-group">
+          <label>Descrição</label>
+          <textarea id="f-desc" class="form-textarea" rows="2" placeholder="Detalha a meta..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Prazo (opcional)</label>
+          <input id="f-prazo" class="form-input" type="date" />
+        </div>`, async () => {
+        const titulo = document.getElementById('f-titulo').value.trim();
+        if (!titulo) { alert('Qual é a meta?'); return; }
+        await addDoc(collection(db, `users/${currentUser.uid}/metas`), {
+          titulo, descricao: document.getElementById('f-desc').value.trim(),
+          prazo: document.getElementById('f-prazo').value,
+          tipo: currentMetaTipo, concluida: false, criadoEm: serverTimestamp()
+        });
+        closeModal(); loadMetas(currentMetaTipo);
+      });
+    });
+
+    window._toggleMeta = async (id, val) => {
+      await updateDoc(doc(db, `users/${currentUser.uid}/metas`, id), { concluida: val });
+      loadMetas(currentMetaTipo);
+    };
+    window._deleteMeta = async (id) => {
+      if (!confirm('Deletar meta?')) return;
+      await deleteDoc(doc(db, `users/${currentUser.uid}/metas`, id));
+      loadMetas(currentMetaTipo);
+    };
+
+    // ─── FINANÇAS ────────────────────────────────────────
+    async function loadFinancas() {
+      const list = document.getElementById('contas-list');
+      list.innerHTML = '<p class="loading-text">Carregando...</p>';
+      const q = query(collection(db, `users/${currentUser.uid}/financas`), orderBy('vencimento'));
+      const snap = await getDocs(q);
+      const contas = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderFinancas(contas);
+    }
+
+    function renderFinancas(contas) {
+      const resumo = document.getElementById('financas-resumo');
+      const list = document.getElementById('contas-list');
+      const total = contas.reduce((acc, c) => acc + parseFloat(c.valor || 0), 0);
+      const pendentes = contas.filter(c => !c.paga);
+      const totalPendente = pendentes.reduce((acc, c) => acc + parseFloat(c.valor || 0), 0);
+      resumo.innerHTML = `
+        <div class="fin-card"><span class="fin-label">Total do mês</span><span class="fin-valor">R$ ${total.toFixed(2)}</span></div>
+        <div class="fin-card fin-pendente"><span class="fin-label">Pendente</span><span class="fin-valor">R$ ${totalPendente.toFixed(2)}</span></div>
+        <div class="fin-card fin-ok"><span class="fin-label">Pago</span><span class="fin-valor">R$ ${(total-totalPendente).toFixed(2)}</span></div>`;
+
+      if (contas.length === 0) { list.innerHTML = '<p class="empty-text">Nenhuma conta cadastrada. Aproveita! 💸</p>'; return; }
+      const hoje = new Date().toISOString().split('T')[0];
+      list.innerHTML = contas.map(c => {
+        const vencida = !c.paga && c.vencimento < hoje;
+        return `
+        <div class="conta-item ${c.paga?'conta-paga':''} ${vencida?'conta-vencida':''}">
+          <button class="conta-check ${c.paga?'checked':''}" onclick="window._toggleConta('${c.id}',${!c.paga})">
+            ${c.paga?'✓':''}
+          </button>
+          <div class="conta-info">
+            <span class="conta-nome">${c.nome}</span>
+            <span class="conta-detalhes">${c.categoria||''} ${c.vencimento?`• Vence: ${c.vencimento}`:''} ${vencida?'⚠️ VENCIDA':''}</span>
+          </div>
+          <span class="conta-valor">R$ ${parseFloat(c.valor||0).toFixed(2)}</span>
+          <div class="conta-actions">
+            <button class="icon-btn" onclick="window._deleteConta('${c.id}')">🗑️</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    document.getElementById('btn-add-conta').addEventListener('click', () => {
+      openModal('Nova Conta 💰', `
+        <div class="form-group">
+          <label>Nome da conta *</label>
+          <input id="f-nome" class="form-input" placeholder="Ex: Aluguel, Netflix, Domínio..." />
+        </div>
+        <div class="form-group">
+          <label>Valor (R$) *</label>
+          <input id="f-valor" class="form-input" type="number" step="0.01" placeholder="150.00" />
+        </div>
+        <div class="form-group">
+          <label>Categoria</label>
+          <select id="f-cat" class="form-select">
+            <option>Moradia</option><option>Assinatura</option><option>Domínio/Hosting</option>
+            <option>Alimentação</option><option>Transporte</option><option>Saúde</option><option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Vencimento</label>
+          <input id="f-venc" class="form-input" type="date" />
+        </div>`, async () => {
+        const nome = document.getElementById('f-nome').value.trim();
+        const valor = document.getElementById('f-valor').value;
+        if (!nome || !valor) { alert('Nome e valor obrigatórios!'); return; }
+        await addDoc(collection(db, `users/${currentUser.uid}/financas`), {
+          nome, valor: parseFloat(valor),
+          categoria: document.getElementById('f-cat').value,
+          vencimento: document.getElementById('f-venc').value,
+          paga: false, criadoEm: serverTimestamp()
+        });
+        closeModal(); loadFinancas();
+      });
+    });
+
+    window._toggleConta = async (id, val) => {
+      await updateDoc(doc(db, `users/${currentUser.uid}/financas`, id), { paga: val });
+      loadFinancas();
+    };
+    window._deleteConta = async (id) => {
+      if (!confirm('Remover essa conta?')) return;
+      await deleteDoc(doc(db, `users/${currentUser.uid}/financas`, id));
+      loadFinancas();
+    };
+
+    // ─── SAÚDE ───────────────────────────────────────────
+    document.querySelectorAll('.saude-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.saude-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentSaudeTipo = tab.dataset.tipo;
+        loadSaude(currentSaudeTipo);
+      });
+    });
+
+    async function loadSaude(tipo) {
+      const list = document.getElementById('saude-list');
+      list.innerHTML = '<p class="loading-text">Carregando...</p>';
+      const q = query(collection(db, `users/${currentUser.uid}/saude`), orderBy('criadoEm', 'desc'));
+      const snap = await getDocs(q);
+      const items = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(i => i.tipo === tipo);
+      renderSaude(items, tipo);
+    }
+
+    function renderSaude(items, tipo) {
+      const list = document.getElementById('saude-list');
+      const labels = { treino:'Treino', dieta:'Dieta', consulta:'Consulta/Exame' };
+      if (items.length === 0) { list.innerHTML = `<p class="empty-text">Nenhum(a) ${labels[tipo]} cadastrado(a).</p>`; return; }
+      list.innerHTML = items.map(i => `
+        <div class="saude-item">
+          <div class="saude-item-header">
+            <span class="saude-titulo">${i.titulo}</span>
+            ${i.data ? `<span class="saude-data">📅 ${i.data}</span>` : ''}
+            <button class="icon-btn" onclick="window._deleteSaude('${i.id}')">🗑️</button>
+          </div>
+          ${i.descricao ? `<p class="saude-desc">${i.descricao}</p>` : ''}
+          ${tipo==='treino' && i.exercicios ? `<div class="exercicios-list">${i.exercicios.split('\n').map(e=>`<span class="exercicio-tag">${e}</span>`).join('')}</div>` : ''}
+          ${tipo==='consulta' && i.feito !== undefined ? `<span class="consulta-status ${i.feito?'feito':'pendente'}">${i.feito?'✓ Feito':'⏳ Pendente'}</span>` : ''}
+        </div>`).join('');
+    }
+
+    const SAUDE_FORMS = {
+      treino: `
+        <div class="form-group"><label>Dia/Grupo muscular *</label>
+        <input id="f-titulo" class="form-input" placeholder="Ex: Segunda — Peito e Tríceps" /></div>
+        <div class="form-group"><label>Data</label><input id="f-data" class="form-input" type="date" /></div>
+        <div class="form-group"><label>Exercícios (um por linha)</label>
+        <textarea id="f-exercicios" class="form-textarea" rows="5" placeholder="Supino reto 4x12&#10;Crucifixo 3x15&#10;Tríceps corda 4x12"></textarea></div>
+        <div class="form-group"><label>Notas</label>
+        <textarea id="f-desc" class="form-textarea" rows="2" placeholder="Observações do treino..."></textarea></div>`,
+      dieta: `
+        <div class="form-group"><label>Nome da dieta *</label>
+        <input id="f-titulo" class="form-input" placeholder="Ex: Low Carb Fase 1" /></div>
+        <div class="form-group"><label>Descrição / Alimentos</label>
+        <textarea id="f-desc" class="form-textarea" rows="6" placeholder="Café da manhã: ovos..."></textarea></div>`,
+      consulta: `
+        <div class="form-group"><label>Consulta/Exame *</label>
+        <input id="f-titulo" class="form-input" placeholder="Ex: Hemograma, Dentista..." /></div>
+        <div class="form-group"><label>Data</label><input id="f-data" class="form-input" type="date" /></div>
+        <div class="form-group"><label>Status</label>
+        <select id="f-feito" class="form-select"><option value="false">Pendente</option><option value="true">Feito</option></select></div>
+        <div class="form-group"><label>Observações</label>
+        <textarea id="f-desc" class="form-textarea" rows="2"></textarea></div>`
+    };
+
+    document.getElementById('btn-add-saude').addEventListener('click', () => {
+      const tipoLabel = document.querySelector('.saude-tab.active').textContent;
+      openModal(`Adicionar ${tipoLabel}`, SAUDE_FORMS[currentSaudeTipo], async () => {
+        const titulo = document.getElementById('f-titulo').value.trim();
+        if (!titulo) { alert('Preenche o campo principal!'); return; }
+        const data_obj = {
+          titulo, tipo: currentSaudeTipo,
+          descricao: document.getElementById('f-desc')?.value.trim() || '',
+          data: document.getElementById('f-data')?.value || '',
+          criadoEm: serverTimestamp()
+        };
+        if (currentSaudeTipo === 'treino') data_obj.exercicios = document.getElementById('f-exercicios')?.value.trim() || '';
+        if (currentSaudeTipo === 'consulta') data_obj.feito = document.getElementById('f-feito')?.value === 'true';
+        await addDoc(collection(db, `users/${currentUser.uid}/saude`), data_obj);
+        closeModal(); loadSaude(currentSaudeTipo);
+      });
+    });
+
+    window._deleteSaude = async (id) => {
+      if (!confirm('Deletar?')) return;
+      await deleteDoc(doc(db, `users/${currentUser.uid}/saude`, id));
+      loadSaude(currentSaudeTipo);
+    };
+
+    // ─── VIAGENS ─────────────────────────────────────────
+    async function loadViagens() {
+      const grid = document.getElementById('viagens-grid');
+      grid.innerHTML = '<p class="loading-text">Carregando destinos...</p>';
+      const q = query(collection(db, `users/${currentUser.uid}/viagens`), orderBy('criadoEm', 'desc'));
+      const snap = await getDocs(q);
+      const viagens = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderViagens(viagens);
+    }
+
+    function renderViagens(viagens) {
+      const grid = document.getElementById('viagens-grid');
+      if (viagens.length === 0) { grid.innerHTML = '<p class="empty-text">Nenhuma viagem ainda. O mundo tá esperando! ✈️</p>'; return; }
+      const EMOJIS_STATUS = { realizada:'✅', planejada:'📋', sonho:'⭐' };
+      grid.innerHTML = viagens.map(v => `
+        <div class="viagem-card">
+          <div class="viagem-emoji">${v.emoji || '🌍'}</div>
+          <div class="viagem-info">
+            <h3>${v.destino}</h3>
+            <span class="viagem-status">${EMOJIS_STATUS[v.status]||'📋'} ${v.status||'Planejada'}</span>
+            ${v.data ? `<span class="viagem-data">📅 ${v.data}</span>` : ''}
+            ${v.notas ? `<p class="viagem-notas">${v.notas}</p>` : ''}
+          </div>
+          <button class="icon-btn" onclick="window._deleteViagem('${v.id}')">🗑️</button>
+        </div>`).join('');
+    }
+
+    document.getElementById('btn-add-viagem').addEventListener('click', () => {
+      openModal('Nova Viagem ✈️', `
+        <div class="form-group"><label>Destino *</label>
+        <input id="f-dest" class="form-input" placeholder="Ex: Lisboa, Portugal" /></div>
+        <div class="form-group"><label>Emoji do lugar</label>
+        <input id="f-emoji" class="form-input" placeholder="🇵🇹" maxlength="4" /></div>
+        <div class="form-group"><label>Status</label>
+        <select id="f-status" class="form-select">
+          <option value="sonho">⭐ Sonho</option>
+          <option value="planejada">📋 Planejada</option>
+          <option value="realizada">✅ Realizada</option>
+        </select></div>
+        <div class="form-group"><label>Data (prevista ou realizada)</label>
+        <input id="f-data" class="form-input" type="month" /></div>
+        <div class="form-group"><label>Notas</label>
+        <textarea id="f-notas" class="form-textarea" rows="2" placeholder="O que fazer lá, custo estimado..."></textarea></div>`,
+        async () => {
+          const destino = document.getElementById('f-dest').value.trim();
+          if (!destino) { alert('Qual o destino?'); return; }
+          await addDoc(collection(db, `users/${currentUser.uid}/viagens`), {
+            destino, emoji: document.getElementById('f-emoji').value.trim(),
+            status: document.getElementById('f-status').value,
+            data: document.getElementById('f-data').value,
+            notas: document.getElementById('f-notas').value.trim(),
+            criadoEm: serverTimestamp()
+          });
+          closeModal(); loadViagens();
+        });
+    });
+    window._deleteViagem = async (id) => {
+      if (!confirm('Remover viagem?')) return;
+      await deleteDoc(doc(db, `users/${currentUser.uid}/viagens`, id));
+      loadViagens();
+    };
+
+    // ─── CONEXÕES ────────────────────────────────────────
+    async function loadConexoes() {
+      const list = document.getElementById('conexoes-list');
+      list.innerHTML = '<p class="loading-text">Carregando...</p>';
+      const q = query(collection(db, `users/${currentUser.uid}/conexoes`), orderBy('data'));
+      const snap = await getDocs(q);
+      const conexoes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderConexoes(conexoes);
+    }
+
+    function renderConexoes(conexoes) {
+      const list = document.getElementById('conexoes-list');
+      const prox = document.getElementById('proximas-datas');
+      if (conexoes.length === 0) { list.innerHTML = '<p class="empty-text">Nenhuma data salva ainda. ❤️</p>'; prox.innerHTML=''; return; }
+      const hoje = new Date();
+      const hojeStr = hoje.toISOString().split('T')[0];
+
+      // próximas 30 dias
+      const proximas = conexoes.filter(c => {
+        if (!c.data) return false;
+        const d = new Date(c.data + 'T00:00:00');
+        const diff = (d - hoje) / (1000*60*60*24);
+        return diff >= 0 && diff <= 30;
+      });
+      prox.innerHTML = proximas.length ? `
+        <div class="proximas-header">⏰ Próximas datas (30 dias)</div>
+        ${proximas.map(c => `
+          <div class="proxima-item">
+            <span>${c.emoji||'❤️'} ${c.nome}</span>
+            <span class="proxima-tipo">${c.tipo}</span>
+            <span class="proxima-data">${c.data}</span>
+          </div>`).join('')}` : '';
+
+      const TIPOS_EMOJI = { aniversario:'🎂', role:'🎉', presente:'🎁', outro:'📌' };
+      list.innerHTML = conexoes.map(c => {
+        const passado = c.data < hojeStr;
+        return `
+        <div class="conexao-item ${passado?'passado':''}">
+          <span class="conexao-emoji">${c.emoji || TIPOS_EMOJI[c.tipo] || '❤️'}</span>
+          <div class="conexao-info">
+            <span class="conexao-nome">${c.nome}</span>
+            <span class="conexao-tipo">${c.tipo} ${c.data?`• ${c.data}`:''}</span>
+            ${c.notas ? `<span class="conexao-notas">${c.notas}</span>` : ''}
+          </div>
+          <button class="icon-btn" onclick="window._deleteConexao('${c.id}')">🗑️</button>
+        </div>`;
+      }).join('');
+    }
+
+    document.getElementById('btn-add-conexao').addEventListener('click', () => {
+      openModal('Nova Data Importante ❤️', `
+        <div class="form-group"><label>Nome / Pessoa *</label>
+        <input id="f-nome" class="form-input" placeholder="Ex: Aniversário da Mãe" /></div>
+        <div class="form-group"><label>Emoji</label>
+        <input id="f-emoji" class="form-input" placeholder="🎂" maxlength="4" /></div>
+        <div class="form-group"><label>Tipo</label>
+        <select id="f-tipo" class="form-select">
+          <option value="aniversario">🎂 Aniversário</option>
+          <option value="role">🎉 Rolê / Evento</option>
+          <option value="presente">🎁 Comprar Presente</option>
+          <option value="outro">📌 Outro</option>
+        </select></div>
+        <div class="form-group"><label>Data *</label>
+        <input id="f-data" class="form-input" type="date" /></div>
+        <div class="form-group"><label>Notas</label>
+        <textarea id="f-notas" class="form-textarea" rows="2" placeholder="O que dar de presente, onde encontrar..."></textarea></div>`,
+        async () => {
+          const nome = document.getElementById('f-nome').value.trim();
+          const data = document.getElementById('f-data').value;
+          if (!nome || !data) { alert('Nome e data obrigatórios!'); return; }
+          await addDoc(collection(db, `users/${currentUser.uid}/conexoes`), {
+            nome, emoji: document.getElementById('f-emoji').value.trim(),
+            tipo: document.getElementById('f-tipo').value,
+            data, notas: document.getElementById('f-notas').value.trim(),
+            criadoEm: serverTimestamp()
+          });
+          closeModal(); loadConexoes();
+        });
+    });
+    window._deleteConexao = async (id) => {
+      if (!confirm('Remover data?')) return;
+      await deleteDoc(doc(db, `users/${currentUser.uid}/conexoes`, id));
+      loadConexoes();
+    };
+  </script>
+</body>
+</html>
